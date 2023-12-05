@@ -15,53 +15,32 @@ class Person(Base):
     username = Column(String(250), unique=True, nullable=False)
     password = Column(Integer, nullable=False)
 
-    def login():
-        return {
-            "username": username, 
-            "password": password
-        }
+    # def login():
+    #     return {
+    #         "username": username, 
+    #         "password": password
+    #     }
 
-class Address(Base):
-    __tablename__ = 'address'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
+class Favorites(Base): 
+    __tablename__ = 'favorites'
     id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
-
-    def to_dict(self):
-        return {}
-
+    name = Column(String(250))
+    user_id = Column(Integer, ForeignKey('person.id'))
+    user = relationship(Person)
 
 class Character(Base):
     __tablename__ = 'characters'
     name = Column(String(250))
     id = Column(Integer, primary_key=True)
     favorite_id = Column(Integer, ForeignKey('favorites.id'))
-    favorite = relationship("Favorites")
+    favorite = relationship(Favorites)
 
 class Planet(Base):
     __tablename__ = 'planets'
     name = Column(String(250))
     id = Column(Integer, primary_key=True)
     favorite_id = Column(Integer, ForeignKey('favorites.id'))
-    favorite = relationship("Favorites")
-
-class Favorites(): 
-    __tablename__ = 'favorites'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250))
-    character_id = Column(Integer, ForeignKey('character.id'))
-    planet_id = Column(Integer, ForeignKey('character.id'))
-    character_id = Column(Integer, ForeignKey('character.id'))
-    user_id = Column(Integer, ForeignKey('person.id'))
-    user = relationship(Person)
-    planet = relationship(Planet)
-    character = relationship(Character)
-
+    favorite = relationship(Favorites)
 
 
 
